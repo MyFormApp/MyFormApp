@@ -9,6 +9,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Image">
+      <UniqueIdentifier>{d37f478a-3f28-44ee-bc1c-d6c7f35d44ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -30,22 +33,56 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="openFileButton.Image.png" />
-    <Image Include="colorButton.Image.png" />
-    <Image Include="fillColor.Image.png" />
-    <Image Include="imageSizeLabel.Image.png" />
-    <Image Include="toolStripButton6.Image.png" />
-    <Image Include="toolStripButton5.Image.png" />
-    <Image Include="toolStripButton4.Image.png" />
-    <Image Include="toolStripButton3.Image.png" />
-    <Image Include="toolStripButton2.Image.png" />
-    <Image Include="toolStripButton1.Image.png" />
-    <Image Include="saveFileMenu.Image.png" />
-    <Image Include="saveFileButton.Image.png" />
-    <Image Include="saveAsFileMenu.Image.png" />
-    <Image Include="saveAsFileButton.Image.png" />
-    <Image Include="putTxt.Image.png" />
-    <Image Include="pixelPointLabel.Image.png" />
-    <Image Include="openFileMenu.Image.png" />
+    <Image Include="colorButton.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="fillColor.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="imageSizeLabel.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="openFileButton.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="openFileMenu.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="pixelPointLabel.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="putTxt.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="saveAsFileButton.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="saveAsFileMenu.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="saveFileButton.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="saveFileMenu.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="toolStripButton2.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="toolStripButton1.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="toolStripButton3.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="toolStripButton4.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="toolStripButton5.Image.png">
+      <Filter>Image</Filter>
+    </Image>
+    <Image Include="toolStripButton6.Image.png">
+      <Filter>Image</Filter>
+    </Image>
   </ItemGroup>
 </Project>
