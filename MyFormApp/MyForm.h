@@ -101,11 +101,12 @@ namespace MyFormApp {
 	private: System::Windows::Forms::ToolStripMenuItem^ dashedLineToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripButton^ fillColor;
 	private: System::Windows::Forms::ToolStripMenuItem^ blurToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ edgeToolStripMenuItem;
+
 	private: System::Windows::Forms::ToolStripTextBox^ enterText;
 
 
 	private: System::Windows::Forms::ToolStripButton^ putTxt;
+	private: System::Windows::Forms::ToolStripMenuItem^ convertToRGBToolStripMenuItem;
 
 
 
@@ -164,7 +165,7 @@ namespace MyFormApp {
 			this->convertToHSVToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->convertToGrayToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->blurToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->edgeToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->convertToRGBToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->drawToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->circleToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->freeHandToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -362,8 +363,8 @@ namespace MyFormApp {
 			// 
 			this->imageToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
 				this->drawLineToolStripMenuItem,
-					this->deawEllipseToolStripMenuItem, this->convertToHSVToolStripMenuItem, this->convertToGrayToolStripMenuItem, this->blurToolStripMenuItem,
-					this->edgeToolStripMenuItem
+					this->deawEllipseToolStripMenuItem, this->convertToHSVToolStripMenuItem, this->convertToGrayToolStripMenuItem, this->convertToRGBToolStripMenuItem,
+					this->blurToolStripMenuItem
 			});
 			this->imageToolStripMenuItem->Name = L"imageToolStripMenuItem";
 			this->imageToolStripMenuItem->Size = System::Drawing::Size(65, 24);
@@ -372,44 +373,44 @@ namespace MyFormApp {
 			// drawLineToolStripMenuItem
 			// 
 			this->drawLineToolStripMenuItem->Name = L"drawLineToolStripMenuItem";
-			this->drawLineToolStripMenuItem->Size = System::Drawing::Size(195, 26);
+			this->drawLineToolStripMenuItem->Size = System::Drawing::Size(224, 26);
 			this->drawLineToolStripMenuItem->Text = L"Draw Line";
 			this->drawLineToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::drawLineToolStripMenuItem_Click);
 			// 
 			// deawEllipseToolStripMenuItem
 			// 
 			this->deawEllipseToolStripMenuItem->Name = L"deawEllipseToolStripMenuItem";
-			this->deawEllipseToolStripMenuItem->Size = System::Drawing::Size(195, 26);
+			this->deawEllipseToolStripMenuItem->Size = System::Drawing::Size(224, 26);
 			this->deawEllipseToolStripMenuItem->Text = L"Deaw Ellipse";
 			this->deawEllipseToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::deawEllipseToolStripMenuItem_Click);
 			// 
 			// convertToHSVToolStripMenuItem
 			// 
 			this->convertToHSVToolStripMenuItem->Name = L"convertToHSVToolStripMenuItem";
-			this->convertToHSVToolStripMenuItem->Size = System::Drawing::Size(195, 26);
+			this->convertToHSVToolStripMenuItem->Size = System::Drawing::Size(224, 26);
 			this->convertToHSVToolStripMenuItem->Text = L"Convert to HSV";
 			this->convertToHSVToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::convertToHSVToolStripMenuItem_Click);
 			// 
 			// convertToGrayToolStripMenuItem
 			// 
 			this->convertToGrayToolStripMenuItem->Name = L"convertToGrayToolStripMenuItem";
-			this->convertToGrayToolStripMenuItem->Size = System::Drawing::Size(195, 26);
+			this->convertToGrayToolStripMenuItem->Size = System::Drawing::Size(224, 26);
 			this->convertToGrayToolStripMenuItem->Text = L"Convert to Gray";
 			this->convertToGrayToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::convertToGrayToolStripMenuItem_Click);
 			// 
 			// blurToolStripMenuItem
 			// 
 			this->blurToolStripMenuItem->Name = L"blurToolStripMenuItem";
-			this->blurToolStripMenuItem->Size = System::Drawing::Size(195, 26);
+			this->blurToolStripMenuItem->Size = System::Drawing::Size(224, 26);
 			this->blurToolStripMenuItem->Text = L"Blur";
 			this->blurToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::blurToolStripMenuItem_Click);
 			// 
-			// edgeToolStripMenuItem
+			// convertToRGBToolStripMenuItem
 			// 
-			this->edgeToolStripMenuItem->Name = L"edgeToolStripMenuItem";
-			this->edgeToolStripMenuItem->Size = System::Drawing::Size(195, 26);
-			this->edgeToolStripMenuItem->Text = L"Edge";
-			this->edgeToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::edgeToolStripMenuItem_Click);
+			this->convertToRGBToolStripMenuItem->Name = L"convertToRGBToolStripMenuItem";
+			this->convertToRGBToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->convertToRGBToolStripMenuItem->Text = L"Convert to RGB";
+			this->convertToRGBToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::convertToRGBToolStripMenuItem_Click);
 			// 
 			// drawToolStripMenuItem
 			// 
@@ -489,7 +490,7 @@ namespace MyFormApp {
 			});
 			this->toolStrip->Location = System::Drawing::Point(4, 28);
 			this->toolStrip->Name = L"toolStrip";
-			this->toolStrip->Size = System::Drawing::Size(596, 28);
+			this->toolStrip->Size = System::Drawing::Size(557, 28);
 			this->toolStrip->TabIndex = 1;
 			// 
 			// openFileButton
@@ -543,14 +544,14 @@ namespace MyFormApp {
 			// solidLineToolStripMenuItem
 			// 
 			this->solidLineToolStripMenuItem->Name = L"solidLineToolStripMenuItem";
-			this->solidLineToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->solidLineToolStripMenuItem->Size = System::Drawing::Size(173, 26);
 			this->solidLineToolStripMenuItem->Text = L"Solid Line";
 			this->solidLineToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::freeHandToolStripMenuItem_Click);
 			// 
 			// dashedLineToolStripMenuItem
 			// 
 			this->dashedLineToolStripMenuItem->Name = L"dashedLineToolStripMenuItem";
-			this->dashedLineToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->dashedLineToolStripMenuItem->Size = System::Drawing::Size(173, 26);
 			this->dashedLineToolStripMenuItem->Text = L"Dashed Line";
 			this->dashedLineToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::dashedLineToolStripMenuItem_Click);
 			// 
@@ -574,7 +575,6 @@ namespace MyFormApp {
 			// 
 			this->colorButton->BackColor = System::Drawing::Color::Black;
 			this->colorButton->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::None;
-			this->colorButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"colorButton.Image")));
 			this->colorButton->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->colorButton->Name = L"colorButton";
 			this->colorButton->Size = System::Drawing::Size(29, 25);
@@ -648,7 +648,6 @@ namespace MyFormApp {
 			// 
 			// enterText
 			// 
-			this->enterText->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
 			this->enterText->Name = L"enterText";
 			this->enterText->Size = System::Drawing::Size(100, 28);
 			this->enterText->Text = L"Text";
@@ -1077,20 +1076,6 @@ private: System::Void blurToolStripMenuItem_Click(System::Object^ sender, System
 	bmp->UnlockBits(bmpData);
 	pictureBox->Image = bmp; // Show result
 }
-
-private: System::Void edgeToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	// Lock Bitmap Bits
-	Rectangle rect = Rectangle(0, 0, bmp->Width, bmp->Height);
-	System::Drawing::Imaging::BitmapData^ bmpData =
-		bmp->LockBits(rect, System::Drawing::Imaging::ImageLockMode::ReadWrite, bmp->PixelFormat);
-	// using OpenCV: Create Image with data pointer
-	Mat image(bmp->Height, bmp->Width, CV_8UC3, bmpData->Scan0.ToPointer(), bmpData->Stride);
-	// Do OpenCV function
-	putText(image, "Hello, OpenCV!", cv::Point(50, 50), FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 255, 255), 2);
-	// Unlock Bitmap Bitsx
-	bmp->UnlockBits(bmpData);
-	pictureBox->Image = bmp; // Show result
-}
 	   const char* put_cv_text;
 private: System::Void toolStripButton7_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (bmp != nullptr) {
@@ -1100,6 +1085,19 @@ private: System::Void toolStripButton7_Click(System::Object^ sender, System::Eve
 		drawState = DrawState::DrawPutText;
 		Cursor = Cursors::Cross;
 	}
+}
+private: System::Void convertToRGBToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	// Lock Bitmap Bits
+	Rectangle rect = Rectangle(0, 0, bmp->Width, bmp->Height);
+	System::Drawing::Imaging::BitmapData^ bmpData =
+		bmp->LockBits(rect, System::Drawing::Imaging::ImageLockMode::ReadWrite, bmp->PixelFormat);
+	// using OpenCV: Create Image with data pointer
+	Mat image(bmp->Height, bmp->Width, CV_8UC3, bmpData->Scan0.ToPointer(), bmpData->Stride);
+	// Do OpenCV function
+	cvtColor(image, image, COLOR_BGR2RGB);
+	// Unlock Bitmap Bits
+	bmp->UnlockBits(bmpData);
+	pictureBox->Image = bmp; // Show result
 }
 };
 }

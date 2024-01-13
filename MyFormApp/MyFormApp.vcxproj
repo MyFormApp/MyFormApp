@@ -147,6 +147,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="fillColor.Image.png" />
     <Image Include="Image\colorButton.Image.png" />
     <Image Include="Image\fillColor.Image.png" />
     <Image Include="Image\imageSizeLabel.Image.png" />

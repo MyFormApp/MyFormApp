@@ -84,5 +84,8 @@
     <Image Include="Image\toolStripButton6.Image.png">
       <Filter>Image</Filter>
     </Image>
+    <Image Include="fillColor.Image.png">
+      <Filter>Image</Filter>
+    </Image>
   </ItemGroup>
 </Project>
