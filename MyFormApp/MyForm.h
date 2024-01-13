@@ -165,8 +165,8 @@ namespace MyFormApp {
 			this->deawEllipseToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->convertToHSVToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->convertToGrayToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->blurToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->convertToRGBToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->blurToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->drawToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->circleToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->freeHandToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -374,44 +374,44 @@ namespace MyFormApp {
 			// drawLineToolStripMenuItem
 			// 
 			this->drawLineToolStripMenuItem->Name = L"drawLineToolStripMenuItem";
-			this->drawLineToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->drawLineToolStripMenuItem->Size = System::Drawing::Size(195, 26);
 			this->drawLineToolStripMenuItem->Text = L"Draw Line";
 			this->drawLineToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::drawLineToolStripMenuItem_Click);
 			// 
 			// deawEllipseToolStripMenuItem
 			// 
 			this->deawEllipseToolStripMenuItem->Name = L"deawEllipseToolStripMenuItem";
-			this->deawEllipseToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->deawEllipseToolStripMenuItem->Size = System::Drawing::Size(195, 26);
 			this->deawEllipseToolStripMenuItem->Text = L"Deaw Ellipse";
 			this->deawEllipseToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::deawEllipseToolStripMenuItem_Click);
 			// 
 			// convertToHSVToolStripMenuItem
 			// 
 			this->convertToHSVToolStripMenuItem->Name = L"convertToHSVToolStripMenuItem";
-			this->convertToHSVToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->convertToHSVToolStripMenuItem->Size = System::Drawing::Size(195, 26);
 			this->convertToHSVToolStripMenuItem->Text = L"Convert to HSV";
 			this->convertToHSVToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::convertToHSVToolStripMenuItem_Click);
 			// 
 			// convertToGrayToolStripMenuItem
 			// 
 			this->convertToGrayToolStripMenuItem->Name = L"convertToGrayToolStripMenuItem";
-			this->convertToGrayToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->convertToGrayToolStripMenuItem->Size = System::Drawing::Size(195, 26);
 			this->convertToGrayToolStripMenuItem->Text = L"Convert to Gray";
 			this->convertToGrayToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::convertToGrayToolStripMenuItem_Click);
-			// 
-			// blurToolStripMenuItem
-			// 
-			this->blurToolStripMenuItem->Name = L"blurToolStripMenuItem";
-			this->blurToolStripMenuItem->Size = System::Drawing::Size(224, 26);
-			this->blurToolStripMenuItem->Text = L"Blur";
-			this->blurToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::blurToolStripMenuItem_Click);
 			// 
 			// convertToRGBToolStripMenuItem
 			// 
 			this->convertToRGBToolStripMenuItem->Name = L"convertToRGBToolStripMenuItem";
-			this->convertToRGBToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->convertToRGBToolStripMenuItem->Size = System::Drawing::Size(195, 26);
 			this->convertToRGBToolStripMenuItem->Text = L"Convert to RGB";
 			this->convertToRGBToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::convertToRGBToolStripMenuItem_Click);
+			// 
+			// blurToolStripMenuItem
+			// 
+			this->blurToolStripMenuItem->Name = L"blurToolStripMenuItem";
+			this->blurToolStripMenuItem->Size = System::Drawing::Size(195, 26);
+			this->blurToolStripMenuItem->Text = L"Blur";
+			this->blurToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::blurToolStripMenuItem_Click);
 			// 
 			// drawToolStripMenuItem
 			// 
@@ -720,6 +720,9 @@ namespace MyFormApp {
 				imageSizeLabel->Visible = true;
 
 			};
+			System::Drawing::Point^ startPoint;
+			Bitmap^ tmpImage;
+			int x = 0; int y = 0;
 private: System::Void openFileMenu_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 		Bitmap^ image = gcnew Bitmap(openFileDialog->FileName);
@@ -745,6 +748,7 @@ private: System::Void saveAsFileMenu_Click(System::Object^ sender, System::Event
 	}
 }
 private: System::Void exitToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	Close();
 }
 private: System::Void drawLineToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (bmp != nullptr) {
@@ -801,9 +805,6 @@ enum class DrawState {
 
 } drawState;
 
-	   System::Drawing::Point^ startPoint;
-	   Bitmap^ tmpImage;
-	   int x = 0; int y = 0;
 private: System::Void pictureBox_MouseDown(System::Object^ sender, MouseEventArgs^ e) {
 	if (bmp != nullptr) {
 		switch (drawState) {
@@ -994,8 +995,6 @@ private: void drawing(System::Windows::Forms::MouseEventArgs^ e) {
 		(drawState == DrawState::DrawingPutText)) {
 		if (tmpImage != nullptr) delete tmpImage;
 		tmpImage = (Bitmap^)bmp->Clone();
-
-
 
 		// Lock Bitmap Bits 
 		Rectangle rect = Rectangle(0, 0, tmpImage->Width, tmpImage->Height);
