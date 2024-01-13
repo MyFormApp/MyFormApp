@@ -7,7 +7,7 @@
 using namespace cv;
 
 namespace MyFormApp {
-
+	
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -27,6 +27,7 @@ namespace MyFormApp {
 			//
 			//TODO: Add the constructor code here
 			//
+			CreateEmptyFile();
 		}
 
 	protected:
@@ -703,6 +704,22 @@ namespace MyFormApp {
 #pragma endregion
 		private:
 			Bitmap^ bmp; // Declare application bitmap image
+			// Create an empty white image
+			void CreateEmptyFile() {
+				cv::Mat canvas = cv::Mat::ones(700, 1500, CV_8UC3);  // 300x400 image with 3 channels (CV_8UC3)
+				canvas.setTo(cv::Scalar(255, 255, 255));  // Set all pixels to white
+				cv::cvtColor(canvas, canvas, cv::COLOR_BGR2RGB);
+				Bitmap^ image = gcnew Bitmap(canvas.cols, canvas.rows, canvas.step, Imaging::PixelFormat::Format24bppRgb, IntPtr(canvas.data));
+				bmp = gcnew Bitmap(image->Size.Width, image->Size.Height, Imaging::PixelFormat::Format24bppRgb);
+				bmp->SetResolution(image->HorizontalResolution, image->VerticalResolution);
+				Graphics^ g = Graphics::FromImage(bmp);
+				g->DrawImage(image, 0, 0);
+				delete image;
+				pictureBox->Image = bmp;
+				imageSizeLabel->Text = System::String::Format("{0}x{1}", bmp->Width, bmp->Height);
+				imageSizeLabel->Visible = true;
+
+			};
 private: System::Void openFileMenu_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 		Bitmap^ image = gcnew Bitmap(openFileDialog->FileName);
@@ -767,141 +784,7 @@ private: System::Void pictureBox_MouseMove(System::Object^ sender, MouseEventArg
 		Color c = bmp->GetPixel(e->X, e->Y);
 		pixelColorLabel->Text = System::String::Format("RGB=[{0}, {1}, {2}]", c.R, c.G, c.B);
 	}
-	Color selectedColor = colorDialog->Color;
-	cv::Scalar colorScalar(selectedColor.B, selectedColor.G, selectedColor.R);
-
-	if ((drawState == DrawState::DrawingLine) || (drawState == DrawState::DrawingEllipse) || 
-		(drawState == DrawState::DrawingCircle) || (drawState == DrawState::DrawingTriangle) || 
-		(drawState == DrawState::DrawingSquare) || (drawState == DrawState::DrawingFillColor) ||
-		(drawState == DrawState::DrawingPutText)) {
-		if (tmpImage != nullptr) delete tmpImage;
-		tmpImage = (Bitmap^)bmp->Clone();
-
-		
-
-		// Lock Bitmap Bits 
-		Rectangle rect = Rectangle(0, 0, tmpImage->Width, tmpImage->Height);
-		System::Drawing::Imaging::BitmapData^ tmpImageData =
-			tmpImage->LockBits(rect, System::Drawing::Imaging::ImageLockMode::ReadWrite, tmpImage->PixelFormat);
-		// Using OpenCv: Creat Image with data pointer
-		Mat image(tmpImage->Height, tmpImage->Width, CV_8UC3, tmpImageData->Scan0.ToPointer(), tmpImageData->Stride);
-		// Do OpenCv function
-		switch (drawState) {
-		case DrawState::DrawingLine:
-			line(image, cv::Point(startPoint->X, startPoint->Y), cv::Point(e->X, e->Y), colorScalar, sizepen);
-			break;
-		case DrawState::DrawingEllipse:
-		{
-			int dx = Math::Abs(startPoint->X - e->X);
-			int dy = Math::Abs(startPoint->Y - e->Y);
-			ellipse(image, cv::Point(startPoint->X, startPoint->Y),
-				cv::Size(dx, dy),
-				Math::Atan2(dy, dx), 0, 360,
-				colorScalar, sizepen);
-			break;
-		}
-		case DrawState::DrawingCircle:
-		{
-			int radius = Math::Sqrt(Math::Pow((e->X - startPoint->X), 2) + Math::Pow((e->Y - startPoint->Y), 1));
-			circle(image, cv::Point(startPoint->X, startPoint->Y), radius, colorScalar, sizepen); // The last parameter (2) is the thickness of the circle
-			break;
-		}
-		case DrawState::DrawingTriangle:
-		{
-			//cv::Point vertices[3] = { cv::Point(startPoint->X, startPoint->Y), cv::Point(e->X, startPoint->Y), cv::Point(e->X, e->Y) };
-			//fillConvexPoly(image, vertices, 3, colorScalar);
-			line(image, cv::Point(startPoint->X, startPoint->Y), cv::Point(e->X, e->Y), colorScalar, sizepen);
-			line(image, cv::Point(startPoint->X, startPoint->Y), cv::Point(startPoint->X, e->Y), colorScalar, sizepen);
-			line(image, cv::Point(startPoint->X, e->Y), cv::Point(e->X, e->Y), colorScalar, sizepen);
-			break;
-		}
-		case DrawState::DrawingSquare:
-		{
-			std::vector<cv::Point> pointsData = { cv::Point(startPoint->X, startPoint->Y), cv::Point(startPoint->X, e->Y), cv::Point(e->X, e->Y), cv::Point(e->X, startPoint->Y) };
-			polylines(image, pointsData, true, colorScalar, sizepen);
-			break;
-		}
-		case DrawState::DrawingFillColor:
-		{
-			Scalar fillColor = Scalar(0, 255, 0);
-			floodFill(image, cv::Point(startPoint->X, startPoint->Y), colorScalar, 0, Scalar::all(20), Scalar::all(20), FLOODFILL_FIXED_RANGE);
-			break;
-		}
-		case DrawState::DrawingPutText:
-		{
-			putText(image, (const cv::String)put_cv_text, cv::Point(e->X, e->Y), FONT_HERSHEY_SIMPLEX, sizepen, colorScalar, 2);
-			break;
-		}
-		}
-		//Unlock Bitmap Bits
-		tmpImage->UnlockBits(tmpImageData);
-		pictureBox->Image = tmpImage; // show result
-		if (drawState == DrawState::DrawingFillColor) {
-			delete startPoint;
-			startPoint = nullptr;
-			delete bmp;
-			bmp = tmpImage;
-			tmpImage = nullptr;
-			drawState = DrawState::NotDrawing;
-			Cursor = Cursors::Default;
-		}
-	}
-	if ((drawState == DrawState::DrawingFreeHand) || (drawState == DrawState::DrawingDashed))
-	{
-		if (tmpImage != nullptr)
-		{
-			delete bmp;
-			bmp = (Bitmap^)tmpImage->Clone();
-			delete tmpImage;
-		}
-		else if (tmpImage == nullptr)
-		{
-			x = startPoint->X;
-			y = startPoint->Y;
-		}
-		tmpImage = (Bitmap^)bmp->Clone();
-		// Lock Bitmap Bits 
-		Rectangle rect = Rectangle(0, 0, tmpImage->Width, tmpImage->Height);
-		System::Drawing::Imaging::BitmapData^ tmpImageData =
-			tmpImage->LockBits(rect, System::Drawing::Imaging::ImageLockMode::ReadWrite, tmpImage->PixelFormat);
-		// Using OpenCv: Creat Image with data pointer
-		Mat image(tmpImage->Height, tmpImage->Width, CV_8UC3, tmpImageData->Scan0.ToPointer(), tmpImageData->Stride);
-
-		switch (drawState) {
-		case DrawState::DrawingFreeHand:
-		{
-			line(image, cv::Point(x, y), cv::Point(e->X, e->Y), colorScalar, sizepen);
-			x = e->X;
-			y = e->Y;
-			break;
-		}
-		case DrawState::DrawingDashed:
-		{
-			// Draw dashed line
-			int dashLength = sizepen * 5;
-			int gapLength = sizepen * 5;
-
-			cv::Point startPoint(x, y);
-			cv::Point endPoint(e->X, e->Y);
-
-			cv::Point delta = endPoint - startPoint;
-			cv::Point direction = delta / norm(delta);
-
-			int dashes = cvRound(norm(delta) / (dashLength + gapLength));
-
-			for (int i = 0; i < dashes; ++i) {
-				cv::Point dashEnd = startPoint + direction * dashLength;
-				line(image, startPoint, dashEnd, colorScalar, sizepen);
-				startPoint = dashEnd + direction * gapLength;
-				x = e->X; y = e->Y;
-			}
-		}
-		}
-
-		//Unlock Bitmap Bits
-		tmpImage->UnlockBits(tmpImageData);
-		pictureBox->Image = tmpImage; // show result
-	}
+	drawing(e);
 }
 
 enum class DrawState {
@@ -952,6 +835,7 @@ private: System::Void pictureBox_MouseDown(System::Object^ sender, MouseEventArg
 				drawState = DrawState::DrawingFillColor;
 			else if (drawState == DrawState::DrawPutText)
 				drawState = DrawState::DrawingPutText;
+			drawing(e);
 		}
 	}
 }
@@ -959,7 +843,8 @@ private: System::Void pictureBox_MouseUp(System::Object^ sender, MouseEventArgs^
 	if ((drawState == DrawState::DrawingLine) || (drawState == DrawState::DrawingEllipse) || 
 		(drawState == DrawState::DrawingCircle) || (drawState == DrawState::DrawingFreeHand) ||
 		(drawState == DrawState::DrawingTriangle) || (drawState == DrawState::DrawingSquare) ||
-		(drawState == DrawState::DrawingDashed) || (drawState == DrawState::DrawingPutText)) {
+		(drawState == DrawState::DrawingDashed) || (drawState == DrawState::DrawingPutText) ||
+		(drawState == DrawState::DrawingFillColor)) {
 		delete startPoint;
 		startPoint = nullptr;
 		delete bmp;
@@ -1098,6 +983,134 @@ private: System::Void convertToRGBToolStripMenuItem_Click(System::Object^ sender
 	// Unlock Bitmap Bits
 	bmp->UnlockBits(bmpData);
 	pictureBox->Image = bmp; // Show result
+}
+private: void drawing(System::Windows::Forms::MouseEventArgs^ e) {
+	Color selectedColor = colorDialog->Color;
+	cv::Scalar colorScalar(selectedColor.B, selectedColor.G, selectedColor.R);
+
+	if ((drawState == DrawState::DrawingLine) || (drawState == DrawState::DrawingEllipse) ||
+		(drawState == DrawState::DrawingCircle) || (drawState == DrawState::DrawingTriangle) ||
+		(drawState == DrawState::DrawingSquare) || (drawState == DrawState::DrawingFillColor) ||
+		(drawState == DrawState::DrawingPutText)) {
+		if (tmpImage != nullptr) delete tmpImage;
+		tmpImage = (Bitmap^)bmp->Clone();
+
+
+
+		// Lock Bitmap Bits 
+		Rectangle rect = Rectangle(0, 0, tmpImage->Width, tmpImage->Height);
+		System::Drawing::Imaging::BitmapData^ tmpImageData =
+			tmpImage->LockBits(rect, System::Drawing::Imaging::ImageLockMode::ReadWrite, tmpImage->PixelFormat);
+		// Using OpenCv: Creat Image with data pointer
+		Mat image(tmpImage->Height, tmpImage->Width, CV_8UC3, tmpImageData->Scan0.ToPointer(), tmpImageData->Stride);
+		// Do OpenCv function
+		switch (drawState) {
+		case DrawState::DrawingLine:
+			line(image, cv::Point(startPoint->X, startPoint->Y), cv::Point(e->X, e->Y), colorScalar, sizepen);
+			break;
+		case DrawState::DrawingEllipse:
+		{
+			int dx = Math::Abs(startPoint->X - e->X);
+			int dy = Math::Abs(startPoint->Y - e->Y);
+			ellipse(image, cv::Point(startPoint->X, startPoint->Y),
+				cv::Size(dx, dy),
+				Math::Atan2(dy, dx), 0, 360,
+				colorScalar, sizepen);
+			break;
+		}
+		case DrawState::DrawingCircle:
+		{
+			int radius = Math::Sqrt(Math::Pow((e->X - startPoint->X), 2) + Math::Pow((e->Y - startPoint->Y), 1));
+			circle(image, cv::Point(startPoint->X, startPoint->Y), radius, colorScalar, sizepen); // The last parameter (2) is the thickness of the circle
+			break;
+		}
+		case DrawState::DrawingTriangle:
+		{
+			//cv::Point vertices[3] = { cv::Point(startPoint->X, startPoint->Y), cv::Point(e->X, startPoint->Y), cv::Point(e->X, e->Y) };
+			//fillConvexPoly(image, vertices, 3, colorScalar);
+			line(image, cv::Point(startPoint->X, startPoint->Y), cv::Point(e->X, e->Y), colorScalar, sizepen);
+			line(image, cv::Point(startPoint->X, startPoint->Y), cv::Point(startPoint->X, e->Y), colorScalar, sizepen);
+			line(image, cv::Point(startPoint->X, e->Y), cv::Point(e->X, e->Y), colorScalar, sizepen);
+			break;
+		}
+		case DrawState::DrawingSquare:
+		{
+			std::vector<cv::Point> pointsData = { cv::Point(startPoint->X, startPoint->Y), cv::Point(startPoint->X, e->Y), cv::Point(e->X, e->Y), cv::Point(e->X, startPoint->Y) };
+			polylines(image, pointsData, true, colorScalar, sizepen);
+			break;
+		}
+		case DrawState::DrawingFillColor:
+		{
+			Scalar fillColor = Scalar(0, 255, 0);
+			floodFill(image, cv::Point(e->X, e->Y), colorScalar, 0, Scalar::all(20), Scalar::all(20), FLOODFILL_FIXED_RANGE);
+			break;
+		}
+		case DrawState::DrawingPutText:
+		{
+			putText(image, (const cv::String)put_cv_text, cv::Point(e->X, e->Y), FONT_HERSHEY_SIMPLEX, sizepen, colorScalar, 2);
+			break;
+		}
+		}
+		//Unlock Bitmap Bits
+		tmpImage->UnlockBits(tmpImageData);
+		pictureBox->Image = tmpImage; // show result
+	}
+	if ((drawState == DrawState::DrawingFreeHand) || (drawState == DrawState::DrawingDashed))
+	{
+		if (tmpImage != nullptr)
+		{
+			delete bmp;
+			bmp = (Bitmap^)tmpImage->Clone();
+			delete tmpImage;
+		}
+		else if (tmpImage == nullptr)
+		{
+			x = startPoint->X;
+			y = startPoint->Y;
+		}
+		tmpImage = (Bitmap^)bmp->Clone();
+		// Lock Bitmap Bits 
+		Rectangle rect = Rectangle(0, 0, tmpImage->Width, tmpImage->Height);
+		System::Drawing::Imaging::BitmapData^ tmpImageData =
+			tmpImage->LockBits(rect, System::Drawing::Imaging::ImageLockMode::ReadWrite, tmpImage->PixelFormat);
+		// Using OpenCv: Creat Image with data pointer
+		Mat image(tmpImage->Height, tmpImage->Width, CV_8UC3, tmpImageData->Scan0.ToPointer(), tmpImageData->Stride);
+
+		switch (drawState) {
+		case DrawState::DrawingFreeHand:
+		{
+			line(image, cv::Point(x, y), cv::Point(e->X, e->Y), colorScalar, sizepen);
+			x = e->X;
+			y = e->Y;
+			break;
+		}
+		case DrawState::DrawingDashed:
+		{
+			// Draw dashed line
+			int dashLength = sizepen * 5;
+			int gapLength = sizepen * 5;
+
+			cv::Point startPoint(x, y);
+			cv::Point endPoint(e->X, e->Y);
+
+			cv::Point delta = endPoint - startPoint;
+			cv::Point direction = delta / norm(delta);
+
+			int dashes = cvRound(norm(delta) / (dashLength + gapLength));
+
+			for (int i = 0; i < dashes; ++i) {
+				cv::Point dashEnd = startPoint + direction * dashLength;
+				line(image, startPoint, dashEnd, colorScalar, sizepen);
+				startPoint = dashEnd + direction * gapLength;
+				x = e->X; y = e->Y;
+			}
+		}
+		}
+
+		//Unlock Bitmap Bits
+		tmpImage->UnlockBits(tmpImageData);
+		pictureBox->Image = tmpImage; // show result
+	}
 }
 };
 }
