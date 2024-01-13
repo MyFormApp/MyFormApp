@@ -73,7 +73,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PublicIncludeDirectories>
+    </PublicIncludeDirectories>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -144,23 +147,23 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="colorButton.Image.png" />
-    <Image Include="fillColor.Image.png" />
-    <Image Include="imageSizeLabel.Image.png" />
-    <Image Include="openFileButton.Image.png" />
-    <Image Include="openFileMenu.Image.png" />
-    <Image Include="pixelPointLabel.Image.png" />
-    <Image Include="putTxt.Image.png" />
-    <Image Include="saveAsFileButton.Image.png" />
-    <Image Include="saveAsFileMenu.Image.png" />
-    <Image Include="saveFileButton.Image.png" />
-    <Image Include="saveFileMenu.Image.png" />
-    <Image Include="toolStripButton1.Image.png" />
-    <Image Include="toolStripButton2.Image.png" />
-    <Image Include="toolStripButton3.Image.png" />
-    <Image Include="toolStripButton4.Image.png" />
-    <Image Include="toolStripButton5.Image.png" />
-    <Image Include="toolStripButton6.Image.png" />
+    <Image Include="Image\colorButton.Image.png" />
+    <Image Include="Image\fillColor.Image.png" />
+    <Image Include="Image\imageSizeLabel.Image.png" />
+    <Image Include="Image\openFileButton.Image.png" />
+    <Image Include="Image\openFileMenu.Image.png" />
+    <Image Include="Image\pixelPointLabel.Image.png" />
+    <Image Include="Image\putTxt.Image.png" />
+    <Image Include="Image\saveAsFileButton.Image.png" />
+    <Image Include="Image\saveAsFileMenu.Image.png" />
+    <Image Include="Image\saveFileButton.Image.png" />
+    <Image Include="Image\saveFileMenu.Image.png" />
+    <Image Include="Image\toolStripButton1.Image.png" />
+    <Image Include="Image\toolStripButton2.Image.png" />
+    <Image Include="Image\toolStripButton3.Image.png" />
+    <Image Include="Image\toolStripButton4.Image.png" />
+    <Image Include="Image\toolStripButton5.Image.png" />
+    <Image Include="Image\toolStripButton6.Image.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
