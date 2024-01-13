@@ -216,7 +216,7 @@ namespace MyFormApp {
 			// toolStripContainer.ContentPanel
 			// 
 			this->toolStripContainer->ContentPanel->Controls->Add(this->pictureBoxPanel);
-			this->toolStripContainer->ContentPanel->Size = System::Drawing::Size(743, 430);
+			this->toolStripContainer->ContentPanel->Size = System::Drawing::Size(743, 435);
 			this->toolStripContainer->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->toolStripContainer->Location = System::Drawing::Point(0, 0);
 			this->toolStripContainer->Name = L"toolStripContainer";
@@ -280,7 +280,7 @@ namespace MyFormApp {
 			this->pictureBoxPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBoxPanel->Location = System::Drawing::Point(0, 0);
 			this->pictureBoxPanel->Name = L"pictureBoxPanel";
-			this->pictureBoxPanel->Size = System::Drawing::Size(743, 430);
+			this->pictureBoxPanel->Size = System::Drawing::Size(743, 435);
 			this->pictureBoxPanel->TabIndex = 1;
 			// 
 			// pictureBox
@@ -288,7 +288,7 @@ namespace MyFormApp {
 			this->pictureBox->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox->Location = System::Drawing::Point(0, 0);
 			this->pictureBox->Name = L"pictureBox";
-			this->pictureBox->Size = System::Drawing::Size(743, 430);
+			this->pictureBox->Size = System::Drawing::Size(743, 435);
 			this->pictureBox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
 			this->pictureBox->TabIndex = 0;
 			this->pictureBox->TabStop = false;
@@ -543,14 +543,14 @@ namespace MyFormApp {
 			// solidLineToolStripMenuItem
 			// 
 			this->solidLineToolStripMenuItem->Name = L"solidLineToolStripMenuItem";
-			this->solidLineToolStripMenuItem->Size = System::Drawing::Size(173, 26);
+			this->solidLineToolStripMenuItem->Size = System::Drawing::Size(224, 26);
 			this->solidLineToolStripMenuItem->Text = L"Solid Line";
 			this->solidLineToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::freeHandToolStripMenuItem_Click);
 			// 
 			// dashedLineToolStripMenuItem
 			// 
 			this->dashedLineToolStripMenuItem->Name = L"dashedLineToolStripMenuItem";
-			this->dashedLineToolStripMenuItem->Size = System::Drawing::Size(173, 26);
+			this->dashedLineToolStripMenuItem->Size = System::Drawing::Size(224, 26);
 			this->dashedLineToolStripMenuItem->Text = L"Dashed Line";
 			this->dashedLineToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::dashedLineToolStripMenuItem_Click);
 			// 

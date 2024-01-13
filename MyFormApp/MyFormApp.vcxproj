@@ -143,6 +143,25 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="colorButton.Image.png" />
+    <Image Include="fillColor.Image.png" />
+    <Image Include="imageSizeLabel.Image.png" />
+    <Image Include="openFileButton.Image.png" />
+    <Image Include="openFileMenu.Image.png" />
+    <Image Include="pixelPointLabel.Image.png" />
+    <Image Include="putTxt.Image.png" />
+    <Image Include="saveAsFileButton.Image.png" />
+    <Image Include="saveAsFileMenu.Image.png" />
+    <Image Include="saveFileButton.Image.png" />
+    <Image Include="saveFileMenu.Image.png" />
+    <Image Include="toolStripButton1.Image.png" />
+    <Image Include="toolStripButton2.Image.png" />
+    <Image Include="toolStripButton3.Image.png" />
+    <Image Include="toolStripButton4.Image.png" />
+    <Image Include="toolStripButton5.Image.png" />
+    <Image Include="toolStripButton6.Image.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
