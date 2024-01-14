@@ -39,12 +39,14 @@ namespace MyFormApp {
 			}
 		}
 	private: System::Windows::Forms::SplitContainer^ splitContainer1;
-	private: System::Windows::Forms::PictureBox^ pictureBox;
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Label^ ImageSizeLabel;
 	private: System::Windows::Forms::Button^ startButton;
 	private: System::Windows::Forms::Label^ captureFPSLabel;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ captureWHLabel;
+
+	private: System::Windows::Forms::Button^ useImagebuttom;
 
 	protected:
 
@@ -62,17 +64,18 @@ namespace MyFormApp {
 		void InitializeComponent(void)
 		{
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
-			this->pictureBox = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->useImagebuttom = (gcnew System::Windows::Forms::Button());
+			this->captureFPSLabel = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->captureWHLabel = (gcnew System::Windows::Forms::Label());
 			this->startButton = (gcnew System::Windows::Forms::Button());
 			this->ImageSizeLabel = (gcnew System::Windows::Forms::Label());
-			this->captureWHLabel = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->captureFPSLabel = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
 			this->splitContainer1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// splitContainer1
@@ -83,32 +86,70 @@ namespace MyFormApp {
 			// 
 			// splitContainer1.Panel1
 			// 
-			this->splitContainer1->Panel1->Controls->Add(this->pictureBox);
+			this->splitContainer1->Panel1->Controls->Add(this->pictureBox1);
 			// 
 			// splitContainer1.Panel2
 			// 
+			this->splitContainer1->Panel2->Controls->Add(this->useImagebuttom);
 			this->splitContainer1->Panel2->Controls->Add(this->captureFPSLabel);
 			this->splitContainer1->Panel2->Controls->Add(this->label2);
 			this->splitContainer1->Panel2->Controls->Add(this->captureWHLabel);
 			this->splitContainer1->Panel2->Controls->Add(this->startButton);
 			this->splitContainer1->Panel2->Controls->Add(this->ImageSizeLabel);
-			this->splitContainer1->Size = System::Drawing::Size(483, 388);
-			this->splitContainer1->SplitterDistance = 291;
+			this->splitContainer1->Size = System::Drawing::Size(777, 583);
+			this->splitContainer1->SplitterDistance = 468;
 			this->splitContainer1->TabIndex = 0;
 			// 
 			// pictureBox
 			// 
-			this->pictureBox->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->pictureBox->Location = System::Drawing::Point(0, 0);
-			this->pictureBox->Name = L"pictureBox";
-			this->pictureBox->Size = System::Drawing::Size(291, 388);
-			this->pictureBox->TabIndex = 0;
-			this->pictureBox->TabStop = false;
+			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->pictureBox1->Location = System::Drawing::Point(0, 0);
+			this->pictureBox1->Name = L"pictureBox";
+			this->pictureBox1->Size = System::Drawing::Size(468, 583);
+			this->pictureBox1->TabIndex = 0;
+			this->pictureBox1->TabStop = false;
+			// 
+			// useImagebuttom
+			// 
+			this->useImagebuttom->Location = System::Drawing::Point(21, 538);
+			this->useImagebuttom->Name = L"useImagebuttom";
+			this->useImagebuttom->Size = System::Drawing::Size(94, 23);
+			this->useImagebuttom->TabIndex = 5;
+			this->useImagebuttom->Text = L"Use Image";
+			this->useImagebuttom->UseVisualStyleBackColor = true;
+			this->useImagebuttom->Click += gcnew System::EventHandler(this, &CameraForm::useImagebuttom_Click);
+			// 
+			// captureFPSLabel
+			// 
+			this->captureFPSLabel->AutoSize = true;
+			this->captureFPSLabel->Location = System::Drawing::Point(101, 62);
+			this->captureFPSLabel->Name = L"captureFPSLabel";
+			this->captureFPSLabel->Size = System::Drawing::Size(14, 16);
+			this->captureFPSLabel->TabIndex = 4;
+			this->captureFPSLabel->Text = L"0";
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(59, 62);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(39, 16);
+			this->label2->TabIndex = 3;
+			this->label2->Text = L"FPS :";
+			// 
+			// captureWHLabel
+			// 
+			this->captureWHLabel->AutoSize = true;
+			this->captureWHLabel->Location = System::Drawing::Point(101, 25);
+			this->captureWHLabel->Name = L"captureWHLabel";
+			this->captureWHLabel->Size = System::Drawing::Size(36, 16);
+			this->captureWHLabel->TabIndex = 2;
+			this->captureWHLabel->Text = L"WxH";
 			// 
 			// startButton
 			// 
 			this->startButton->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->startButton->Location = System::Drawing::Point(90, 344);
+			this->startButton->Location = System::Drawing::Point(207, 539);
 			this->startButton->Name = L"startButton";
 			this->startButton->Size = System::Drawing::Size(75, 23);
 			this->startButton->TabIndex = 1;
@@ -119,44 +160,17 @@ namespace MyFormApp {
 			// ImageSizeLabel
 			// 
 			this->ImageSizeLabel->AutoSize = true;
-			this->ImageSizeLabel->Location = System::Drawing::Point(15, 25);
+			this->ImageSizeLabel->Location = System::Drawing::Point(18, 25);
 			this->ImageSizeLabel->Name = L"ImageSizeLabel";
-			this->ImageSizeLabel->Size = System::Drawing::Size(44, 16);
+			this->ImageSizeLabel->Size = System::Drawing::Size(80, 16);
 			this->ImageSizeLabel->TabIndex = 0;
-			this->ImageSizeLabel->Text = L"label1";
-			// 
-			// captureWHLabel
-			// 
-			this->captureWHLabel->AutoSize = true;
-			this->captureWHLabel->Location = System::Drawing::Point(120, 25);
-			this->captureWHLabel->Name = L"captureWHLabel";
-			this->captureWHLabel->Size = System::Drawing::Size(44, 16);
-			this->captureWHLabel->TabIndex = 2;
-			this->captureWHLabel->Text = L"label1";
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(18, 62);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(44, 16);
-			this->label2->TabIndex = 3;
-			this->label2->Text = L"label2";
-			// 
-			// captureFPSLabel
-			// 
-			this->captureFPSLabel->AutoSize = true;
-			this->captureFPSLabel->Location = System::Drawing::Point(123, 62);
-			this->captureFPSLabel->Name = L"captureFPSLabel";
-			this->captureFPSLabel->Size = System::Drawing::Size(44, 16);
-			this->captureFPSLabel->TabIndex = 4;
-			this->captureFPSLabel->Text = L"label3";
+			this->ImageSizeLabel->Text = L"Image SIze :";
 			// 
 			// CameraForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(483, 388);
+			this->ClientSize = System::Drawing::Size(777, 583);
 			this->Controls->Add(this->splitContainer1);
 			this->Name = L"CameraForm";
 			this->Text = L"CameraForm";
@@ -165,7 +179,7 @@ namespace MyFormApp {
 			this->splitContainer1->Panel2->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->EndInit();
 			this->splitContainer1->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -197,9 +211,11 @@ namespace MyFormApp {
 			capture.read(image);
 			// Unlock Bitmap Bits
 			bmp->UnlockBits(bmpData);
-			pictureBox->Image = bmp;
+			pictureBox1->Image = bmp;
 			Application::DoEvents();
 		}
 	}
+private: System::Void useImagebuttom_Click(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
